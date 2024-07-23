@@ -11,10 +11,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # Updated to the latest version
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v4  # Updated to the latest version
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
@@ -24,12 +24,10 @@ jobs:
 
       - name: Clone repository
         run: |
-          git clone https://github.com/davidkapcsandi/test1.git ${{ runner.workspace }}/repo
+          python3 clone_repo.py ${{ github.workspace }}/repo
 
       - name: Run Python scripts
         run: |
-          cd ${{ runner.workspace }}/repo
-          python3 clone_repo.py
-          python3 make_commit.py
-          python3 deploy_aws_resources.py
+          python3 ${{ github.workspace }}/repo/make_commit.py
+          python3 ${{ github.workspace }}/repo/deploy_aws_resources.py
 
